@@ -14,6 +14,18 @@
         "description": "The name of the App Service plan to use for hosting the web app."
       }
     },
+    "PowerBiWorkspaceCollectionName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the PowerBi Workspace Collection"
+      }
+    },
+    "PowerBiWorkspaceAccessKey": {
+      "type": "string",
+      "metadata": {
+        "description": "The access key string"
+      }
+    },
     "sku": {
       "type": "string",
       "allowedValues": [
@@ -30,7 +42,7 @@
         "P3",
         "P4"
       ],
-      "defaultValue": "S1",
+      "defaultValue": "F1",
       "metadata": {
         "description": "The pricing tier for the hosting plan."
       }
@@ -49,7 +61,11 @@
     },
     "repoURL": {
       "type": "string",
-      "defaultValue": "https://github.com/davidebbo-test/Mvc52Application.git",
+      "allowedValues": [
+        "https://github.com/davidebbo-test/Mvc52Application.git",
+        "https://github.com/Gordonby/power-bi-embedded-helper"
+      ],
+      "defaultValue": "https://github.com/Gordonby/power-bi-embedded-helper",
       "metadata": {
         "description": "The URL for the GitHub repository that contains the project to deploy."
       }
@@ -62,6 +78,8 @@
       }
     }
   },
+  "variables": {
+      },
   "resources": [
     {
       "apiVersion": "2015-08-01",
@@ -99,6 +117,21 @@
             "RepoUrl": "[parameters('repoURL')]",
             "branch": "[parameters('branch')]",
             "IsManualIntegration": true
+          }
+        },
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "tags": {
+            "displayName": "EmbeddedWorkSpaceSettings"
+          },
+          "properties": {
+            "powerbi:AccessKey": "[parameters('PowerBiWorkspaceAccessKey')]",
+            "powerbi:WorkspaceCollection": "[parameters('PowerBiWorkspaceCollectionName')]"
           }
         }
       ]

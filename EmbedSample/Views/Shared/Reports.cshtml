@@ -1,4 +1,4 @@
-﻿@model ReportsViewModel
+﻿@model WorkspaceReportsViewModel
 @{
     Layout = null;
 
@@ -8,24 +8,29 @@
     {
         classNames += " active";
     }
+
 }
 
-<li class="@classNames">
-    <a data-toggle="collapse" href="#reports-nav">
-        <span class="icon fa fa-bar-chart"></span><span class="title">Reports</span>
-    </a>
-    <!-- Dropdown level 1 -->
-    <div id="reports-nav" class="panel-collapse collapse">
-        <div class="panel-body">
-            <ul class="nav navbar-nav">
-                @foreach (var report in Model.Reports)
+@foreach (var workspace in Model.WorkspaceReports)
+{
+    <li class="@classNames">
+        <a data-toggle="collapse" href="#reports-nav">
+            <span class="icon fa fa-bar-chart"></span><span class="title" title="@workspace.WorkspaceId">Report Workspace</span>
+        </a>
+        <!-- Dropdown level 1, Report count = @workspace.Reports.Count -->
+        <div id="reports-nav" class="">
+            <div class="panel-body">
+                <ul class="nav navbar-nav">
+                    @foreach (var report in workspace.Reports)
                 {
-                    var reportClass = Request.QueryString["reportId"] == report.Id ? "active" : "";
-                    <li class="@reportClass">
-                        @Html.ActionLink(report.Name, "Report", new { reportId = report.Id })
-                    </li>
-                }
-            </ul>
+                        <!-- Report @report.Id  Workspace @workspace.WorkspaceId -->
+                        var reportClass = Request.QueryString["reportId"] == report.Id ? "active" : "mo";
+                        <li class="@reportClass">
+                            @Html.ActionLink(report.Name, "Report", new { reportId = report.Id, workspaceId = workspace.WorkspaceId })
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
-    </div>
-</li>
+    </li>
+}

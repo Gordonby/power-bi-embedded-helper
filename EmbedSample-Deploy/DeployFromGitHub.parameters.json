@@ -3,10 +3,16 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "siteName": {
-      "value": "GEN-UNIQUE"
+      "value": "PowerBiE-SampleSite"
     },
     "hostingPlanName": {
-      "value": "GEN-UNIQUE"
+      "value": "PowerBiE-SampleSite"
+    },
+    "PowerBiWorkspaceCollectionName": {
+      "value": "PowerBiTraining-WE"
+    },
+    "PowerBiWorkspaceAccessKey": {
+      "value": "HNdZ8C6q1n1sYkM1RV6LLIm53iwoVFjnXHh2lLDMj3zG8OwtG76Ddo0HR4ME6+rjUoId4jxHLXVNHy7Ac78xSQ=="
     }
   }
 }
